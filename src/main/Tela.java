@@ -31,8 +31,8 @@ public class Tela {
 			switch (opcao) {
 			case 1: cadastrarVertice(teclado); break;
 			case 2: calcularDistanciaMenor(); break;
-			case 3: cadastrarConexoes(); break;
-			case 4: cadastrarConexoes(); break;
+			case 3: cadastraConexoesVerticeExistente(teclado); break;
+			case 4: excluiConexoes(teclado); break;
 			case 5: break;
 			default:
 				System.out.println("Opção digitada inválida!");
@@ -71,27 +71,7 @@ public class Tela {
 			nomeVertice = teclado.next();
 		}while(existeNomeVertice(nomeVertice));
 
-		int opcao;
-		List<Map<String, Double>> conexoes = new ArrayList<>();
-
-		do {
-			System.out.println("----------Menu------------");
-			System.out.println("1 - Cadastrar nova conexão");
-			System.out.println("2 - Voltar                ");
-			System.out.println("--------------------------");
-			opcao = teclado.nextInt();
-			
-			switch (opcao) {
-			case 1: conexoes = cadastrarConexao(teclado, conexoes); break;
-			case 2: break;
-			default:
-				System.out.println("Opção digitada inválida!");
-				break;
-			}
-		} while (opcao != 2);
-
-		Vertice vertice = new Vertice(nomeVertice, conexoes);
-		LogicaDijkstraUtil.getVertices().add(vertice);
+		cadastraConexoes(teclado, nomeVertice);
 	}
 
 	/**
@@ -102,7 +82,6 @@ public class Tela {
 	 * @return se existe ou não 
 	 */
 	private static boolean existeNomeVertice(String nomeVertice) {
-		LogicaDijkstraUtil.getVertices();
 		for (Vertice vertice : LogicaDijkstraUtil.getVertices()) {
 			if(vertice.getNome().equals(nomeVertice)) {
 				System.out.println("O nome do vertice já existe!");
@@ -164,7 +143,14 @@ public class Tela {
 	 * @param nomeConexao
 	 * @return conexão é válida ou não
 	 */
+	
 	private static boolean conexaoValida(String nomeConexao) {
+		for (Vertice lVertice : LogicaDijkstraUtil.getVertices()) {
+			if (!lVertice.getNome().equals(nomeConexao)) {
+				System.out.println("Nome da vertice inexistente!");
+				return true;
+			}
+		}
 		
 		return false;
 	}
@@ -175,6 +161,7 @@ public class Tela {
 	 * exibir a resposta na tela
 	 *
 	 */
+	
 	private static void calcularDistanciaMenor() {
 		
 	}
@@ -184,8 +171,61 @@ public class Tela {
 	 * Cadastrar nova conexão para o vértice apontado
 	 * 
 	 */
-	private static void cadastrarConexoes() {
+	
+	private static void cadastraConexoesVerticeExistente(Scanner sTeclado) {
+		String sNomeConexao = "";
+		mostrarVerticesExistentes();
+		do {
+			System.out.println("Digite o nome do vértice que deseja realizar as conexões: ");
+			sNomeConexao = sTeclado.next();
+		}while(conexaoValida(sNomeConexao));
 		
+		cadastraConexoes(sTeclado, sNomeConexao);
 	}
 	
+	private static void cadastraConexoes(Scanner sTeclado, String sNomeVertice) {
+		
+		int opcao;
+		List<Map<String, Double>> conexoes = new ArrayList<>();
+
+		do {
+			System.out.println("----------Menu------------");
+			System.out.println("1 - Cadastrar nova conexão");
+			System.out.println("2 - Voltar                ");
+			System.out.println("--------------------------");
+			opcao = sTeclado.nextInt();
+			
+			switch (opcao) {
+			case 1: conexoes = cadastrarConexao(sTeclado, conexoes); break;
+			case 2: break;
+			default:
+				System.out.println("Opção digitada inválida!");
+				break;
+			}
+		} while (opcao != 2);
+
+		Vertice vertice = new Vertice(sNomeVertice, conexoes);
+		LogicaDijkstraUtil.getVertices().add(vertice);
+	}
+	
+	private static void excluiConexoes(Scanner sTeclado) {
+		String sNomeConexao = "";
+		mostrarVerticesExistentes();
+		do {
+			System.out.println("Digite o nome do vértice que deseja realizar as conexões: ");
+			sNomeConexao = sTeclado.next();
+		}while(conexaoValida(sNomeConexao));
+		
+		if (recuperaVertice(sNomeConexao) != null)
+			LogicaDijkstraUtil.getVertices().remove(recuperaVertice(sNomeConexao));
+	}	
+	
+	private static Vertice recuperaVertice(String sNomeConexao) {
+		for (Vertice lVertice : LogicaDijkstraUtil.getVertices()) {
+			if (lVertice.getNome().equals(sNomeConexao))
+				return lVertice;
+		}
+		
+		return null;
+	}
 }
