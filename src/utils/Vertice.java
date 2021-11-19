@@ -30,5 +30,4 @@ public class Vertice {
 		this.nome = nome;
 	}
 		
-	
 }
