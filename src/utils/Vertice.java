@@ -2,22 +2,23 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Vertice {
 
 	private String nome;
-	private List<String> conexoes = new ArrayList<>();
+	private List<Map<String, Double>> conexoes = new ArrayList<>();
 
-	public Vertice(String nome, List<String> conexoes) {
+	public Vertice(String nome, List<Map<String, Double>> conexoes) {
 		this.nome = nome;
 		this.conexoes = conexoes;
 	}
 
-	public List<String> getConexoes() {
+	public List<Map<String, Double>> getConexoes() {
 		return conexoes;
 	}
 
-	public void setConexoes(List<String> conexoes) {
+	public void setConexoes(List<Map<String, Double>> conexoes) {
 		this.conexoes = conexoes;
 	}
 
