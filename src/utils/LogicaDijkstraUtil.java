@@ -59,7 +59,7 @@ public class LogicaDijkstraUtil {
 			
 			caminhoSequencia += verticeMaisCurto.getNome();
 			caminhoCalculo += pesoMaisCurto;
-			if(!verticeMaisCurto.getNome().equals(verticeOrigem.getNome())) {
+			if(!verticeMaisCurto.getNome().equals(verticeDestino.getNome())) {
 				caminhoSequencia += ",";
 				caminhoCalculo += "+";
 			}

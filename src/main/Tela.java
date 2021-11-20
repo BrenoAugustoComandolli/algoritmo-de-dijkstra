@@ -71,9 +71,14 @@ public class Tela {
 			nomeVertice = teclado.next();
 		}while(existeNomeVertice(nomeVertice));
 		Map<String, Double> conexoes = cadastraConexoes(teclado, nomeVertice);
-		
+				
 		Vertice vertice = new Vertice(nomeVertice, conexoes);
 		LogicaDijkstraUtil.getVertices().add(vertice);
+	}
+
+	private static void criarConexaoReversa(String nomeConexao, String nomeVertice, Double pesoVertice) {
+		Vertice conexao = LogicaDijkstraUtil.recuperarVertice(nomeConexao);
+		conexao.getConexoes().put(nomeVertice, pesoVertice);
 	}
 
 	/**
@@ -127,11 +132,12 @@ public class Tela {
 		
 		System.out.println("Digite o peso da conexão: ");
 		Double pesoConexao = teclado.nextDouble();
-
+		
 		conexoes.put(nomeConexao, pesoConexao);
+		criarConexaoReversa(nomeConexao, nomeVertice, pesoConexao);
 		return conexoes;
 	}
-	
+		
 	/**
 	 * 
 	 * Mostrar vértices existentes na lista
