@@ -1,24 +1,23 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Vertice {
 
 	private String nome;
-	private List<Map<String, Double>> conexoes = new ArrayList<>();
+	private Map<String, Double> conexoes = new HashMap<>();
 
-	public Vertice(String nome, List<Map<String, Double>> conexoes) {
+	public Vertice(String nome, Map<String, Double> conexoes) {
 		this.nome = nome;
 		this.conexoes = conexoes;
 	}
 
-	public List<Map<String, Double>> getConexoes() {
+	public Map<String, Double> getConexoes() {
 		return conexoes;
 	}
 
-	public void setConexoes(List<Map<String, Double>> conexoes) {
+	public void setConexoes(Map<String, Double> conexoes) {
 		this.conexoes = conexoes;
 	}
 

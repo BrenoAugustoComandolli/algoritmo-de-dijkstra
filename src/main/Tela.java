@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class Tela {
 			opcao = teclado.nextInt();
 			switch (opcao) {
 			case 1: cadastrarVertice(teclado); break;
-			case 2: calcularDistanciaMenor(); break;
+			case 2: calcularDistanciaMenor(teclado); break;
 			case 3: cadastraConexoesVerticeExistente(teclado); break;
 			case 4: excluiConexoes(teclado); break;
 			case 5: break;
@@ -70,7 +69,6 @@ public class Tela {
 			System.out.println("Digite o nome do vértice: ");
 			nomeVertice = teclado.next();
 		}while(existeNomeVertice(nomeVertice));
-
 		cadastraConexoes(teclado, nomeVertice);
 	}
 
@@ -100,21 +98,18 @@ public class Tela {
 	 * @param conexoes
 	 * @return
 	 */
-	private static List<Map<String, Double>> cadastrarConexao(Scanner teclado, List<Map<String, Double>> conexoes) {
+	private static Map<String, Double> cadastrarConexao(Scanner teclado, Map<String, Double> conexoes) {
 		String nomeConexao = "";
 		mostrarVerticesExistentes();
 		do {
 			System.out.println("Digite o nome do vértice: ");
 			nomeConexao = teclado.next();
-		}while(conexaoValida(nomeConexao));
+		}while(verticeValido(nomeConexao));
 		
 		System.out.println("Digite o peso da conexão: ");
 		Double pesoConexao = teclado.nextDouble();
 
-		Map<String, Double> conexao = new HashMap<>();
-
-		conexao.put(nomeConexao, pesoConexao);
-		conexoes.add(conexao);
+		conexoes.put(nomeConexao, pesoConexao);
 		return conexoes;
 	}
 	
@@ -131,7 +126,7 @@ public class Tela {
 		Integer numIdx = 0;
 		for (Vertice umVertice : lVertice) {
 			numIdx++;
-			System.out.println(numIdx+". - ["+umVertice+"]");
+			System.out.println(numIdx+". - ["+umVertice.getNome()+"]");
 		}
 		System.out.println("-----------------------------");
 	}
@@ -143,15 +138,13 @@ public class Tela {
 	 * @param nomeConexao
 	 * @return conexão é válida ou não
 	 */
-	
-	private static boolean conexaoValida(String nomeConexao) {
+	private static boolean verticeValido(String nomeConexao) {
 		for (Vertice lVertice : LogicaDijkstraUtil.getVertices()) {
 			if (!lVertice.getNome().equals(nomeConexao)) {
 				System.out.println("Nome da vertice inexistente!");
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -161,9 +154,31 @@ public class Tela {
 	 * exibir a resposta na tela
 	 *
 	 */
-	
-	private static void calcularDistanciaMenor() {
+	private static void calcularDistanciaMenor(Scanner teclado) {
+		String nomeOrigem = "";
+		String nomeDestino = "";
 		
+		do {
+			System.out.println("Informe vértice de origem: ");
+			nomeOrigem = teclado.next();
+		}while(verticeValido(nomeOrigem));
+		
+		do {
+			System.out.println("Informe vértice de destino: ");
+			nomeDestino = teclado.next();
+		}while(verticeValido(nomeDestino));
+		
+		if(nomeOrigem.equals(nomeDestino)) {
+			System.out.println("Vértices de origem e destino são iguais!");
+		}
+		
+		Vertice verticeOrigem = LogicaDijkstraUtil.recuperarVertice(nomeOrigem);
+		Vertice verticeDestino = LogicaDijkstraUtil.recuperarVertice(nomeDestino);
+		
+		String caminho = LogicaDijkstraUtil.recuperarCaminhoMenor(verticeOrigem, verticeDestino);
+		System.out.println("----------------------------");
+		System.out.println("Caminho: "+ caminho);
+		System.out.println("----------------------------");
 	}
 	
 	/**
@@ -171,22 +186,26 @@ public class Tela {
 	 * Cadastrar nova conexão para o vértice apontado
 	 * 
 	 */
-	
 	private static void cadastraConexoesVerticeExistente(Scanner sTeclado) {
 		String sNomeConexao = "";
 		mostrarVerticesExistentes();
 		do {
 			System.out.println("Digite o nome do vértice que deseja realizar as conexões: ");
 			sNomeConexao = sTeclado.next();
-		}while(conexaoValida(sNomeConexao));
-		
+		}while(verticeValido(sNomeConexao));
 		cadastraConexoes(sTeclado, sNomeConexao);
 	}
 	
+	/**
+	 * 
+	 * Cadastra as conexões do vértice
+	 *
+	 * @param sTeclado
+	 * @param sNomeVertice
+	 */
 	private static void cadastraConexoes(Scanner sTeclado, String sNomeVertice) {
-		
 		int opcao;
-		List<Map<String, Double>> conexoes = new ArrayList<>();
+		Map<String, Double> conexoes = new HashMap<>();
 
 		do {
 			System.out.println("----------Menu------------");
@@ -208,24 +227,23 @@ public class Tela {
 		LogicaDijkstraUtil.getVertices().add(vertice);
 	}
 	
+	/**
+	 * 
+	 * Exclui vértice da lista 
+	 *
+	 * @param sTeclado
+	 */
 	private static void excluiConexoes(Scanner sTeclado) {
 		String sNomeConexao = "";
 		mostrarVerticesExistentes();
 		do {
 			System.out.println("Digite o nome do vértice que deseja realizar as conexões: ");
 			sNomeConexao = sTeclado.next();
-		}while(conexaoValida(sNomeConexao));
+		}while(verticeValido(sNomeConexao));
 		
-		if (recuperaVertice(sNomeConexao) != null)
-			LogicaDijkstraUtil.getVertices().remove(recuperaVertice(sNomeConexao));
+		if (LogicaDijkstraUtil.recuperarVertice(sNomeConexao) != null) {
+			LogicaDijkstraUtil.getVertices().remove(LogicaDijkstraUtil.recuperarVertice(sNomeConexao));
+		}
 	}	
 	
-	private static Vertice recuperaVertice(String sNomeConexao) {
-		for (Vertice lVertice : LogicaDijkstraUtil.getVertices()) {
-			if (lVertice.getNome().equals(sNomeConexao))
-				return lVertice;
-		}
-		
-		return null;
-	}
 }
