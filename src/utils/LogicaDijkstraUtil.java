@@ -51,11 +51,12 @@ public class LogicaDijkstraUtil {
 		
 		do {
 			for (Map.Entry<String, Double> umaConexao : verticeMaisCurto.getConexoes().entrySet()) {
-				if(pesoMaisCurto == null || umaConexao.getValue() < pesoMaisCurto) {
+				if(pesoMaisCurto == null || (umaConexao.getValue() < pesoMaisCurto && !caminhoJaUsado(umaConexao.getKey(), caminhoSequencia))) {
 					verticeMaisCurto = recuperarVertice(umaConexao.getKey());
 					pesoMaisCurto = umaConexao.getValue();
 				}
 			}
+			
 			caminhoSequencia += verticeMaisCurto.getNome();
 			caminhoCalculo += pesoMaisCurto;
 			if(!verticeMaisCurto.getNome().equals(verticeOrigem.getNome())) {
@@ -69,6 +70,21 @@ public class LogicaDijkstraUtil {
 		caminhoSequencia += "]";
 		caminhoCalculo += ")";
 		return caminhoResultado+=caminhoSequencia+caminhoCalculo+" = "+caminhoSoma; 
+	}
+	
+	/**
+	 * 
+	 * Caminho de vértice já tomado na rota, até o vértice final 
+	 *
+	 * @param umaConexao
+	 * @param caminhoSequencia
+	 * @return contem no caminho
+	 */
+	private static boolean caminhoJaUsado(String umaConexao, String caminhoSequencia) {
+		if(caminhoSequencia.contains(umaConexao)) {
+			return true;
+		}
+		return false;
 	}
 	
 }
