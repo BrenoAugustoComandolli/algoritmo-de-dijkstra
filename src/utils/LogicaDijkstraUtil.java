@@ -50,8 +50,9 @@ public class LogicaDijkstraUtil {
 		String caminhoResultado = "";
 		
 		do {
+			pesoMaisCurto = null;
 			for (Map.Entry<String, Double> umaConexao : verticeMaisCurto.getConexoes().entrySet()) {
-				if(pesoMaisCurto == null || (umaConexao.getValue() < pesoMaisCurto && !caminhoJaUsado(umaConexao.getKey(), caminhoSequencia))) {
+				if((pesoMaisCurto == null || umaConexao.getValue() < pesoMaisCurto) && !caminhoJaUsado(umaConexao.getKey(), caminhoSequencia, verticeOrigem)) {
 					verticeMaisCurto = recuperarVertice(umaConexao.getKey());
 					pesoMaisCurto = umaConexao.getValue();
 				}
@@ -65,11 +66,11 @@ public class LogicaDijkstraUtil {
 			}
 			caminhoSoma+=pesoMaisCurto;
 			
-		}while(verticeMaisCurto.getNome().equals(verticeOrigem.getNome()));
+		}while(!verticeMaisCurto.getNome().equals(verticeDestino.getNome()));
 		
 		caminhoSequencia += "]";
 		caminhoCalculo += ")";
-		return caminhoResultado+=caminhoSequencia+caminhoCalculo+" = "+caminhoSoma; 
+		return caminhoResultado+=caminhoSequencia+" = "+caminhoCalculo+" = "+caminhoSoma; 
 	}
 	
 	/**
@@ -80,8 +81,8 @@ public class LogicaDijkstraUtil {
 	 * @param caminhoSequencia
 	 * @return contem no caminho
 	 */
-	private static boolean caminhoJaUsado(String umaConexao, String caminhoSequencia) {
-		if(caminhoSequencia.contains(umaConexao)) {
+	private static boolean caminhoJaUsado(String umaConexao, String caminhoSequencia, Vertice verticeOrigem) {
+		if(caminhoSequencia.contains(umaConexao) || umaConexao.equals(verticeOrigem.getNome())) {
 			return true;
 		}
 		return false;

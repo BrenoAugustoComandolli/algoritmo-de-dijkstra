@@ -128,7 +128,7 @@ public class Tela {
 			
 		}while(verticeInvalido(nomeConexao) || 
 			   nomeVertice.equals(nomeConexao) || 
-			   conexaoJaExistente(conexoes, nomeConexao));
+			   conexaoJaExistente(conexoes, nomeConexao, nomeVertice));
 		
 		System.out.println("Digite o peso da conexão: ");
 		Double pesoConexao = teclado.nextDouble();
@@ -304,9 +304,17 @@ public class Tela {
 	 * @param conexoes
 	 * @param nomeConexao
 	 */
-	private static boolean conexaoJaExistente(Map<String, Double> conexoes, String nomeConexao) {
+	private static boolean conexaoJaExistente(Map<String, Double> conexoes, String nomeConexao, String nomeVertice) {
 		for (Entry<String, Double> umVertice : conexoes.entrySet()) {
 			if(umVertice.getKey().contains(nomeConexao)){
+				System.out.println("Conexão já existente");
+				return true;
+			}
+		}
+		Vertice vertice = LogicaDijkstraUtil.recuperarVertice(nomeVertice);
+		for (Entry<String, Double> umVertice : vertice.getConexoes().entrySet()) {
+			if(umVertice.getKey().contains(nomeConexao)){
+				System.out.println("Conexão já existente");
 				return true;
 			}
 		}
