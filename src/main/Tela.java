@@ -9,7 +9,6 @@ import java.util.Scanner;
 import utils.LogicaDijkstraUtil;
 import utils.Vertice;
 
-
 public class Tela {
 	
 	public static void main(String[] args) {
@@ -76,6 +75,16 @@ public class Tela {
 		LogicaDijkstraUtil.getVertices().add(vertice);
 	}
 
+	/**
+	 * 
+	 * Realizar conexão reversa. 
+	 * Ex. conexão existe de A -> B, então vai ser feito
+	 * de B -> A
+	 *
+	 * @param nomeConexao
+	 * @param nomeVertice
+	 * @param pesoVertice
+	 */
 	private static void criarConexaoReversa(String nomeConexao, String nomeVertice, Double pesoVertice) {
 		Vertice conexao = LogicaDijkstraUtil.recuperarVertice(nomeConexao);
 		conexao.getConexoes().put(nomeVertice, pesoVertice);
@@ -215,6 +224,8 @@ public class Tela {
 		Vertice verticeDestino = LogicaDijkstraUtil.recuperarVertice(nomeDestino);
 		
 		String caminho = LogicaDijkstraUtil.recuperarCaminhoMenor(verticeOrigem, verticeDestino);
+		
+		System.out.println("");
 		System.out.println("----------------------------");
 		System.out.println("Caminho: "+ caminho);
 		System.out.println("----------------------------");
