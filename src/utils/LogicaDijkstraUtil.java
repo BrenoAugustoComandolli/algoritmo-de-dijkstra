@@ -83,11 +83,23 @@ public class LogicaDijkstraUtil {
 					if(verticeAtual.getNome().equals(verticeDestino.getNome())) {
 						somaPeso = menorValor;
 					}else {
-						pesosUsados.insert(1, antigoMenorValor-menorValor);
+						if(verticeAtual.getNome().equals(verticeOrigem.getNome())) {
+							pesosUsados.insert(1, (antigoMenorValor-menorValor));
+						}else {
+							pesosUsados.insert(1, ","+(antigoMenorValor-menorValor));
+						}
 					}
 					String verticeCaminho = chavesCaminho[linha][menorColuna];
 					caminhosUsados.insert(1, verticeCaminho);
+					if(!verticeCaminho.equals(verticeOrigem.getNome())) {
+						if(!verticeAtual.getNome().equals(verticeDestino.getNome())){
+							caminhosUsados.insert(2,",");
+						}
+					}
 					verticeAtual = recuperarVertice(verticeCaminho);
+					if(verticeAtual.getNome().equals(verticeOrigem.getNome())) {
+						caminhosUsados.insert(2,",");
+					}
 					antigoMenorValor = menorValor;
 				}
 			}
@@ -97,6 +109,7 @@ public class LogicaDijkstraUtil {
 			pesosUsados.insert(1, antigoMenorValor);
 		}
 	
+		caminhosUsados.append(","+verticeDestino.getNome());
 		caminhosUsados.append("]");
 		pesosUsados.append("]");
 		return caminhosUsados.toString()+" "+pesosUsados.toString()+" = "+somaPeso;
