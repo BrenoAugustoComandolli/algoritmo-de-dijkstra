@@ -17,7 +17,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Recupera o vértice do nome apontado
+	 * Recupera o vï¿½rtice do nome apontado
 	 *
 	 * @param sNomeConexao
 	 * @return vertice
@@ -33,8 +33,8 @@ public class LogicaDijkstraUtil {
 
 	/**
 	 * 
-	 * Realiza cálculo de caminho mais curto, retornando uma String com 
-	 * a operação e os caminhos tomados
+	 * Realiza cï¿½lculo de caminho mais curto, retornando uma String com 
+	 * a operaï¿½ï¿½o e os caminhos tomados
 	 *
 	 * @param verticeOrigem
 	 * @param verticeDestino
@@ -116,7 +116,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Aplicar valores inciais para espaços vazios
+	 * Aplicar valores inciais para espaï¿½os vazios
 	 *
 	 * @param valoresCaminho
 	 * @param chavesCaminho
@@ -147,8 +147,8 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Realiza o passo a passo de cálculos utilizados
-	 * até preencher matrizes
+	 * Realiza o passo a passo de cï¿½lculos utilizados
+	 * atï¿½ preencher matrizes
 	 *
 	 * @param verticeOrigem
 	 * @param verticeDestino
@@ -182,7 +182,7 @@ public class LogicaDijkstraUtil {
 		for(int linha = 1; linha < chavesCaminho.length; linha++){
 			String conexao = chavesCaminho[linha][0];
 			if(verticeAtual.getConexoes().get(conexao) != null && !conexao.equals(verticeOrigem.getNome())) {
-				Double pesoAtual = recuperarPesoDistância(verticeAtual, conexao, linha, valoresCaminho, chavesCaminho);
+				Double pesoAtual = recuperarPesoDistancia(verticeAtual, conexao, linha, valoresCaminho, chavesCaminho);
 				Double proximoPeso = recuperarProximoPeso(pesoAtual, linha, valoresCaminho, chavesCaminho);
 				valoresCaminho[linha][numPasso] = String.valueOf(proximoPeso);
 				chavesCaminho[linha][numPasso] = verticeAtual.getNome();
@@ -204,7 +204,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Busca o vértice para próxima série de cálculos 
+	 * Busca o vï¿½rtice para prï¿½xima sï¿½rie de cï¿½lculos 
 	 *
 	 * @param numPasso
 	 * @param valoresCaminho
@@ -232,7 +232,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Verificar se o item já foi feito o cálculo
+	 * Verificar se o item jï¿½ foi feito o cï¿½lculo
 	 *
 	 * @param chaveStr
 	 * @param ignorados
@@ -249,7 +249,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Recuperar distância até a conexão, 
+	 * Recuperar distï¿½ncia atï¿½ a conexï¿½o, 
 	 * somando os caminhos anteriores
 	 *
 	 * @param verticeAtual
@@ -259,7 +259,7 @@ public class LogicaDijkstraUtil {
 	 * @param chavesCaminho
 	 * @return distancia
 	 */
-	private static Double recuperarPesoDistância(Vertice verticeAtual, String conexao, Integer linha,
+	private static Double recuperarPesoDistancia(Vertice verticeAtual, String conexao, Integer linha,
 											     String[][] valoresCaminho, String[][] chavesCaminho) {
 		Double pesoSemPassosAnteriores = verticeAtual.getConexoes().get(conexao);
 		return pesoSemPassosAnteriores + recuperaPesoMenorAteConexaoAtual(valoresCaminho, chavesCaminho, verticeAtual);
@@ -267,8 +267,8 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Recupera o menor peso até o vértice, comparando 
-	 * o peso atual, aos pesos já cadastrados
+	 * Recupera o menor peso atï¿½ o vï¿½rtice, comparando 
+	 * o peso atual, aos pesos jï¿½ cadastrados
 	 *
 	 * @param pesoAtual
 	 * @param linha
@@ -291,7 +291,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Recuperar peso menor até a conexão atual
+	 * Recuperar peso menor atï¿½ a conexï¿½o atual
 	 *
 	 * @param valoresCaminho
 	 * @param chavesCaminho
@@ -359,7 +359,7 @@ public class LogicaDijkstraUtil {
 	
 	/**
 	 * 
-	 * Exibição de resultados do cálculo
+	 * Exibiï¿½ï¿½o de resultados do cï¿½lculo
 	 *
 	 * @param valoresCaminho
 	 * @param chavesCaminho
@@ -367,7 +367,7 @@ public class LogicaDijkstraUtil {
 	private static void mostrarResultadoCalculo(String[][] valoresCaminho, String[][] chavesCaminho) {
 		String linhaTabela = recuperarLinhaTabela();
 		System.out.println(linhaTabela);
-		System.out.println("Resolução do algoritmo:  ");
+		System.out.println("Resoluï¿½ï¿½o do algoritmo:  ");
 		System.out.println(linhaTabela);
 		
 		for (int linha = 0; linha < chavesCaminho.length; linha++) {
